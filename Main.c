@@ -163,6 +163,13 @@ EEPROMVarsType EEPROMVars EEMEM;
 
 // ======================================================================================
 
+
+
+
+#define FAIL_TIME (24UL * 60UL * 60UL)
+#define WARN_TIME (20UL * 60UL * 60UL)
+
+
 /*
  NAME:      | main
  PURPOSE:   | Entry point into program, handles top level menu and driver initialization
@@ -207,24 +214,7 @@ int main(void)
 	LCD_Init();
 	LCD_PutStr_f(BusyText);
 	
-	if ((eeprom_read_word(&EEPROMVars.MagicNumber) != MAGIC_NUM) || (eeprom_read_byte(&EEPROMVars.VersionNumber) != ((VERSION_MAJOR << 4) | VERSION_MINOR)))
-	{
-		for (uint16_t EAddr = 0; EAddr < sizeof(EEPROMVars); EAddr++) // Clear the EEPROM if first run
-		  eeprom_write_byte((uint8_t*)EAddr, 0xFF);
-		  
-		SPI_SPIInit();
-		DF_ENABLEDATAFLASH(TRUE);
-
-		VAMM_EraseAVRMemory(VAMM_ERASE_ERASEDATA);
-
-		DF_ENABLEDATAFLASH(FALSE);
-		SPI_SPIOFF();
-
-		eeprom_write_word(&EEPROMVars.MagicNumber, MAGIC_NUM);
-		eeprom_write_byte(&EEPROMVars.VersionNumber, ((VERSION_MAJOR << 4) | VERSION_MINOR));
-	}
 	
-	LCD_CONTRAST_LEVEL(eeprom_read_byte(&EEPROMVars.LCDContrast));
 	DF_ENABLEDATAFLASH(FALSE);
 	OSCCAL_Calibrate();
 	TOUT_SetupSleepTimer();
@@ -236,37 +226,24 @@ int main(void)
 	JoyStatus = JOY_INVALID;                     // Use an invalid joystick value to force the program to write the
 	                                             // name of the default command onto the LCD
 
-	if (StartupMode == 1)                        // Check if production startup mode
-	{
-		CurrFunc  = 2;                           // Index for PROGRAM AVR mode	
-		LCD_PutStr_f(ProgramAVROptions[0]);      // Show default PROGRAM AVR submenu item
-		JoyStatus = JOY_PRESS;                   // Force a joy press to enter the function in the main menu loop
-	}
-	else if (StartupMode == 2)                   // Check if AVRISP startup mode
-	{
-		CurrFunc  = 0;                           // Index for AVRISP mode	
-		JoyStatus = JOY_PRESS;                   // Force a joy press to enter the function in the main menu loop
-	}
-
 	for (;;)
 	{
 		if (JoyStatus)
-		{
-			if (JoyStatus & JOY_UP)
-			  (CurrFunc == 0)? CurrFunc = ARRAY_UPPERBOUND(MainFunctionPtrs): CurrFunc--;
-			else if (JoyStatus & JOY_DOWN)
-			  (CurrFunc == ARRAY_UPPERBOUND(MainFunctionPtrs))? CurrFunc = 0 : CurrFunc++;
-			else if (JoyStatus & JOY_PRESS)
-			  ((FuncPtr)pgm_read_word(&MainFunctionPtrs[CurrFunc]))(); // Run associated function
-			else if (JoyStatus & JOY_RIGHT)
-			  MAIN_ShowAbout();
-
-			LCD_PutStr_f((char*)pgm_read_word(&MainFunctionNames[CurrFunc]));
-
-			MAIN_WaitForJoyRelease();
+		{	
+		  if (JoyStatus & JOY_PRESS) {
+		    TimeSincePress = 0;
+		  }
+		  MAIN_WaitForJoyRelease();
 		}
-
+		ShowTimeMinutes(TimeSincePress);
 		MAIN_MenuSleep();
+		if (TimeSincePress < WARN_TIME) {
+			MAIN_SETSTATUSLED(MAIN_STATLED_GREEN);
+		} else if (TimeSincePress < FAIL_TIME) {
+			MAIN_SETSTATUSLED(MAIN_STATLED_ORANGE);
+		} else {
+			MAIN_SETSTATUSLED(MAIN_STATLED_RED);
+		}
 	}
 	
 	return 0;

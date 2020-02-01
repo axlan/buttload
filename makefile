@@ -71,6 +71,7 @@ SRC =	AVRISPCommandInterpreter.c   \
 		Dataflash.c                  \
 		ISPChipComm.c                \
 		LCD_Driver.c                 \
+		RTC.c                        \
 		Main.c                       \
 		OSCCal.c                     \
 		ProgramManager.c             \

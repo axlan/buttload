@@ -191,6 +191,12 @@
     <Compile Include="RingBuff.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="RTC.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="RTC.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="Settings.c">
       <SubType>compile</SubType>
     </Compile>

@@ -32,6 +32,7 @@
 	#if defined(INC_FROM_MAIN)
 		#include "Dataflash.h"
 		#include "Delay.h"
+		#include "RTC.h"
 		#include "LCD_Driver.h"
 		#include "OSCCal.h"
 		#include "ProgramManager.h"

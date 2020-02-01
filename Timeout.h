@@ -48,7 +48,8 @@
 	extern volatile uint8_t PacketTimeOutTicks;
 	extern volatile uint8_t SleepTimeOutSecs;
 	extern volatile uint8_t SecsBeforeAutoSleep;
-
+	extern volatile uint32_t TimeSincePress;
+	
 	extern const    uint8_t AutoSleepTOValues[5] PROGMEM;
 
 	// PROTOTYPES:
