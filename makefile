@@ -1,6 +1,6 @@
 # Hey Emacs, this is a -*- makefile -*-
 #----------------------------------------------------------------------------
-# WinAVR Makefile Template written by Eric B. Weddington, Jörg Wunsch, et al.
+# WinAVR Makefile Template written by Eric B. Weddington, Jï¿½rg Wunsch, et al.
 #
 # Released to the Public Domain
 #
@@ -63,7 +63,7 @@ TARGET = ButtLoad
 # Object files directory
 #     To put object files in current directory, use a dot (.), do NOT make
 #     this an empty or blank macro!
-OBJDIR = ./.obj
+OBJDIR = .obj
 
 
 # List C source files here. (C dependencies are automatically generated.)
@@ -384,12 +384,10 @@ HEXSIZE = $(SIZE) --target=$(FORMAT) $(TARGET).hex
 ELFSIZE = $(SIZE) --mcu=$(MCU) --format=avr $(TARGET).elf
 
 sizebefore:
-	@if test -f $(TARGET).elf; then echo; echo $(MSG_SIZE_BEFORE); $(ELFSIZE); \
-	2>/dev/null; echo; fi
-
+	@IF exist $(TARGET).elf (  echo $(MSG_SIZE_BEFORE) "$(shell $(ELFSIZE))"; )
 sizeafter:
-	@if test -f $(TARGET).elf; then echo; echo $(MSG_SIZE_AFTER); $(ELFSIZE); \
-	2>/dev/null; echo; fi
+	@IF exist $(TARGET).elf (  echo $(MSG_SIZE_AFTER) "$(shell $(ELFSIZE))"; )
+
 
 
 
@@ -551,11 +549,11 @@ clean_bin :
 	$(REMOVE) $(TARGET).hex
 
 # Create object files directory
-$(shell mkdir $(OBJDIR) 2>/dev/null)
+$(shell mkdir $(OBJDIR) 2> test.log )
 
 
 # Include the dependency files.
--include $(shell mkdir .dep 2>/dev/null) $(wildcard .dep/*)
+-include $(shell mkdir .dep 2>test.log) $(wildcard .dep/*)
 
 
 # Listing of phony targets.

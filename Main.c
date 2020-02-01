@@ -126,7 +126,7 @@ BUTTLOADTAG(Copyright, "<C> 2007 - GPL");
 BUTTLOADTAG(BTIME,     __TIME__ " " __DATE__);
 
 // PROGMEM CONSTANTS:
-const char*   AboutTextPtrs[]                   PROGMEM = {BUTTTAG_Title.TagData, BUTTTAG_Version.TagData, BUTTTAG_Author.TagData, BUTTTAG_Copyright.TagData};
+const char*  const AboutTextPtrs[]                   PROGMEM = {BUTTTAG_Title.TagData, BUTTTAG_Version.TagData, BUTTTAG_Author.TagData, BUTTTAG_Copyright.TagData};
 
 const char    BusyText[]                        PROGMEM = "*BUSY*";
 
@@ -137,7 +137,7 @@ const char    Func_PRGMSTOREINFO[]              PROGMEM = "DATAFLASH STATS";
 const char    Func_SETTINGS[]                   PROGMEM = "SETTINGS";
 const char    Func_SLEEP[]                      PROGMEM = "SLEEP MODE";
 
-const char*   MainFunctionNames[]               PROGMEM = {Func_ISPPRGM   , Func_STOREPRGM   , Func_PRGMAVR   , Func_PRGMSTOREINFO, Func_SETTINGS      , Func_SLEEP};
+const char* const  MainFunctionNames[]               PROGMEM = {Func_ISPPRGM   , Func_STOREPRGM   , Func_PRGMAVR   , Func_PRGMSTOREINFO, Func_SETTINGS      , Func_SLEEP};
 const FuncPtr MainFunctionPtrs[]                PROGMEM = {MAIN_AVRISPMode, MAIN_StoreProgram, MAIN_ProgramAVR, MAIN_StorageInfo  , MAIN_ChangeSettings, MAIN_SleepMode};
 
 const char    SFunc_SETCONTRAST[]               PROGMEM = "SET CONTRAST";
@@ -150,7 +150,7 @@ const char    SFunc_SETSTARTUP[]                PROGMEM = "SET STARTUP MODE";
 const char    SFunc_CLEARMEM[]                  PROGMEM = "CLEAR SETTINGS";
 const char    SFunc_GOBOOTLOADER[]              PROGMEM = "JUMP TO BOOTLOADER";
 
-const char*   SettingFunctionNames[]            PROGMEM = {SFunc_SETCONTRAST, SFunc_SETSPISPEED, SFunc_SETRESETMODE, SFunc_SETFIRMMINOR , SFunc_SETAUTOSLEEPTO   , SFunc_SETTONEVOL, SFunc_SETSTARTUP  , SFunc_CLEARMEM, SFunc_GOBOOTLOADER};
+const char*  const SettingFunctionNames[]            PROGMEM = {SFunc_SETCONTRAST, SFunc_SETSPISPEED, SFunc_SETRESETMODE, SFunc_SETFIRMMINOR , SFunc_SETAUTOSLEEPTO   , SFunc_SETTONEVOL, SFunc_SETSTARTUP  , SFunc_CLEARMEM, SFunc_GOBOOTLOADER};
 const FuncPtr SettingFunctionPtrs[]             PROGMEM = {SET_SetContrast  , SET_SetISPSpeed  , SET_SetResetMode  , SET_SetFirmMinorVer, SET_SetAutoSleepTimeOut, SET_SetToneVol  , SET_SetStartupMode, MAIN_ClearMem , MAIN_GoBootloader};
 
 const char    ProgramAVROptions[2][8]           PROGMEM = {"START", "OPTIONS"};

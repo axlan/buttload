@@ -11,7 +11,7 @@
 
 /*
    ButtTag.H: This file can be included in user projects to
-   allow the embedding of “ButtTags”, small strings of text
+   allow the embedding of ï¿½ButtTagsï¿½, small strings of text
    which may be read by ButtLoad (if the program is stored in
    ButtLoad's non-volatile memory) or by other C management
    programs. Each ButtTag must have a unique name and may be
@@ -30,7 +30,7 @@
 	struct ButtLoadData
 	{
 		char MagicString[4];
-		char TagData[];
+		const char TagData[];
 	};
 	
 	// DEFINES:
