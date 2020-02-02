@@ -122,8 +122,10 @@ void ShowTimeMinutes(uint32_t totalSeconds)
 {
 	char HH, HL, MH, ML;
 
-	uint8_t gHOUR = totalSeconds / (60 * 60);
-	uint8_t gMINUTE = (totalSeconds - (gHOUR * 60)) / 60;
+	uint16_t totalMinutes = totalSeconds / 60UL;
+	
+	uint8_t gHOUR = totalMinutes / 60;
+	uint8_t gMINUTE = totalMinutes % 60;
 	
 	HH = CHAR2BCD2(gHOUR);
 	
