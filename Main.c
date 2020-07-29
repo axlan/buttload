@@ -180,6 +180,9 @@ int main(void)
 {	
 	uint8_t CurrFunc    = 0;
 	uint8_t StartupMode = eeprom_read_byte(&EEPROMVars.StartupMode);
+
+	char USER_INDICATORS[] = {'M', 'J'};
+	uint8_t turn_index = 0;
 	
 	clock_prescale_set(clock_div_1);
 
@@ -232,10 +235,12 @@ int main(void)
 		{	
 		  if (JoyStatus & JOY_PRESS) {
 		    TimeSincePress = 0;
+			turn_index++;
+			turn_index %= sizeof(USER_INDICATORS);
 		  }
 		  MAIN_WaitForJoyRelease();
 		}
-		ShowTimeMinutes(TimeSincePress);
+		ShowTimeMinutes(TimeSincePress, USER_INDICATORS[turn_index]);
 		MAIN_MenuSleep();
 		if (TimeSincePress < WARN_TIME) {
 			MAIN_SETSTATUSLED(MAIN_STATLED_GREEN);

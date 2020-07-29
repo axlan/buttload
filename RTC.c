@@ -117,8 +117,7 @@ void ShowTime(uint32_t totalSeconds)
 
 }
 
-
-void ShowTimeMinutes(uint32_t totalSeconds)
+void ShowTimeMinutes(uint32_t totalSeconds, char seperator)
 {
 	char HH, HL, MH, ML;
 
@@ -136,7 +135,7 @@ void ShowTimeMinutes(uint32_t totalSeconds)
 	ML = (MH & 0x0F) + '0';
 	MH = (MH >> 4) + '0';
 
-	char str[] = {HH, HL, '-', MH, ML, '\0'};
+	char str[] = {HH, HL, seperator, MH, ML, '\0'};
 
 	LCD_PutStr(str);
 }

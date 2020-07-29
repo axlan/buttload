@@ -20,4 +20,4 @@
 
 //  Function declarations
 void ShowUptime(uint32_t totalSeconds);
-void ShowTimeMinutes(uint32_t totalSeconds);
+void ShowTimeMinutes(uint32_t totalSeconds, char seperator);
